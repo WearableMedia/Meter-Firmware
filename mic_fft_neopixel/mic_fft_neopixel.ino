@@ -51,6 +51,12 @@ uint8_t lvl[FRAMES][BINS], // Bin levels for the prior #FRAMES frames
         avgHi[BINS],       // upper limits -- for dynamic level adjustment.
         frameIdx = 0;      // Counter for lvl storage
 
+int leftButtonCounter = 0;
+bool prevLeftButtonPressed = false;
+
+int rightButtonCounter = 0;
+bool prevRightButtonPressed = false;
+
 #include "Calibration.h"
 
 void setup() {
@@ -76,6 +82,31 @@ void setup() {
 // LOOP FUNCTION - runs over and over - does animation ---------------------
 
 void loop() {
+
+  //check the button
+  bool leftButtonPressed = CircuitPlayground.leftButton();
+  if (!leftButtonPressed) {
+    if (prevLeftButtonPressed) {
+      leftButtonCounter++;
+    }
+  }
+  if (leftButtonCounter >= 5) {
+    leftButtonCounter = 0;
+  }
+  prevLeftButtonPressed = leftButtonPressed;
+
+  bool rightButtonPressed = CircuitPlayground.rightButton();
+  if (!rightButtonPressed) {
+    if (prevRightButtonPressed) {
+      rightButtonCounter++;
+    }
+  }
+  if (rightButtonCounter >= 5) {
+    rightButtonCounter = 0;
+  }
+  prevRightButtonPressed = rightButtonPressed;
+
+
   uint16_t spectrum[32]; // FFT spectrum output buffer
 
   CircuitPlayground.mic.fft(spectrum);
@@ -106,7 +137,18 @@ void loop() {
   uint8_t  j, minLvl, maxLvl, nBins, binNum, *data;
 
   for (i = 0; i < NUMPIXELS; i++) { // For each output bin (and each pixel)...
-    data   = (uint8_t *)pgm_read_word(&binData[i]);
+    if (leftButtonCounter == 0) {
+      data   = (uint8_t *)pgm_read_word(&binData0[i]);
+    } else if (leftButtonCounter == 1) {
+      data   = (uint8_t *)pgm_read_word(&binData1[i]);
+    } else if (leftButtonCounter == 2) {
+      data   = (uint8_t *)pgm_read_word(&binData2[i]);
+    } else if (leftButtonCounter == 3) {
+      data   = (uint8_t *)pgm_read_word(&binData3[i]);
+    } else if (leftButtonCounter == 4) {
+      data   = (uint8_t *)pgm_read_word(&binData4[i]);
+    }
+
     nBins  = pgm_read_byte(&data[0]); // Number of input bins to merge
     binNum = pgm_read_byte(&data[1]); // Index of first input bin
     data  += 2;
@@ -140,10 +182,22 @@ void loop() {
     level = 1 + ((sum <= avgLo[i]) ? 0 :
                  256L * (sum - avgLo[i]) / (long)(avgHi[i] - avgLo[i]));
     // Clip output and convert to color:
+    uint8_t r, g, b;
     if (level <= 255) {
-      uint8_t r = (pgm_read_byte(&reds[i])   * level) >> 8,
-              g = (pgm_read_byte(&greens[i]) * level) >> 8,
-              b = (pgm_read_byte(&blues[i])  * level) >> 8;
+      if (rightButtonCounter == 0) {
+        r = (pgm_read_byte(&reds0[i])   * level) >> 8;
+        g = (pgm_read_byte(&greens0[i]) * level) >> 8;
+        b = (pgm_read_byte(&blues0[i])  * level) >> 8;
+      } else if (rightButtonCounter == 1) {
+        r = (pgm_read_byte(&reds1[i % 12])   * level) >> 8;
+        g = (pgm_read_byte(&greens1[i % 12]) * level) >> 8;
+        b = (pgm_read_byte(&blues1[i % 12])  * level) >> 8;
+      } else {
+        r = (pgm_read_byte(174)   * level) >> 8;
+        g = (pgm_read_byte(174) * level) >> 8;
+        b = (pgm_read_byte(174)  * level) >> 8;
+      }
+
       pixels.setPixelColor(i,
                            pgm_read_byte(&gamma8[r]),
                            pgm_read_byte(&gamma8[g]),

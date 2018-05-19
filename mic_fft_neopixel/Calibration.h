@@ -26,21 +26,51 @@ noise[]    = { 0x04, 0x03, 0x03, 0x03, 0x02, 0x02, 0x02, 0x02,
                                                                bin8data[] = { 13, 11, 2, 12, 45, 106, 167, 184, 147, 89, 43, 18, 6, 2, 1 },
                                                                    bin9data[] = { 18, 14, 2, 6, 19, 46, 89, 138, 175, 185, 165, 127, 85, 51, 27, 14, 7, 3, 2, 1 },
                                                                        // Pointers to 10 bin arrays, because PROGMEM arrays-of-arrays are weird:
-                                                                       * const binData[] = { bin0data, bin1data, bin2data, bin3data, bin4data,
-                                                                                             bin5data, bin6data, bin7data, bin8data, bin9data,
-                                                                                             bin0data, bin1data, bin2data, bin3data, bin4data,
-                                                                                             bin5data, bin6data, bin7data, bin8data, bin9data,
-                                                                                             bin0data, bin1data, bin2data, bin3data, bin4data,
-                                                                                             bin5data, bin6data, bin7data, bin8data, bin9data,
-                                                                                             bin0data, bin1data, bin2data, bin3data, bin4data,
-                                                                                             bin5data, bin6data, bin7data, bin8data, bin9data,
-                                                                                             bin0data, bin1data, bin2data, bin3data, bin4data,
-                                                                                             bin5data, bin6data, bin7data
-                                                                                           },
-                                                                           // R,G,B values for color wheel covering 10 NeoPixels:
-                                                                           reds[]   = { 0xAD, 0x9A, 0x84, 0x65, 0x00, 0x00, 0x00, 0x00, 0x65, 0x84, 0xAD, 0x9A, 0x84, 0x65, 0x00, 0x00, 0x00, 0x00, 0x65, 0x84, 0xAD, 0x9A, 0x84, 0x65, 0x00, 0x00, 0x00, 0x00, 0x65, 0x84, 0xAD, 0x9A, 0x84, 0x65, 0x00, 0x00, 0x00, 0x00, 0x65, 0x84, 0xAD, 0x9A, 0x84, 0x65, 0x00, 0x00, 0x00, 0x00, 0x65, 0x84 },
-                                                                               greens[] = { 0x00, 0x66, 0x87, 0x9E, 0xB1, 0x87, 0x66, 0x00, 0x00, 0x00, 0x00, 0x66, 0x87, 0x9E, 0xB1, 0x87, 0x66, 0x00, 0x00, 0x00, 0x00, 0x66, 0x87, 0x9E, 0xB1, 0x87, 0x66, 0x00, 0x00, 0x00, 0x00, 0x66, 0x87, 0x9E, 0xB1, 0x87, 0x66, 0x00, 0x00, 0x00, 0x00, 0x66, 0x87, 0x9E, 0xB1, 0x87, 0x66, 0x00, 0x00, 0x00 },
-                                                                                   blues[]  = { 0x00, 0x00, 0x00, 0x00, 0x00, 0xC3, 0xE4, 0xFF, 0xE4, 0xC3, 0x00, 0x00, 0x00, 0x00, 0x00, 0xC3, 0xE4, 0xFF, 0xE4, 0xC3, 0x00, 0x00, 0x00, 0x00, 0x00, 0xC3, 0xE4, 0xFF, 0xE4, 0xC3, 0x00, 0x00, 0x00, 0x00, 0x00, 0xC3, 0xE4, 0xFF, 0xE4, 0xC3, 0x00, 0x00, 0x00, 0x00, 0x00, 0xC3, 0xE4, 0xFF, 0xE4, 0xC3 },
+                                                                       * const binData0[] = { bin9data, bin9data, bin9data, bin9data, bin9data, bin9data, bin9data, bin9data,
+                                                                                              bin9data, bin9data, bin9data, bin9data, bin9data, bin9data, bin9data, bin9data,
+                                                                                              bin9data, bin9data, bin9data, bin9data, bin9data, bin9data, bin9data, bin9data,
+                                                                                              bin9data, bin9data, bin9data, bin9data, bin9data, bin9data, bin9data, bin9data,
+                                                                                              bin9data, bin9data, bin9data, bin9data, bin9data, bin9data, bin9data, bin9data,
+                                                                                              bin9data, bin9data, bin9data, bin9data, bin9data, bin9data, bin9data, bin9data
+                                                                                            },
+                                                                           // Pointers to 10 bin arrays, because PROGMEM arrays-of-arrays are weird:
+                                                                           * const binData1[] = { bin0data, bin1data, bin2data, bin3data, bin4data, bin5data, bin6data, bin7data,
+                                                                                                  bin8data, bin9data, bin0data, bin1data, bin2data, bin3data, bin4data, bin5data,
+                                                                                                  bin6data, bin7data, bin8data, bin9data, bin0data, bin1data, bin2data, bin3data,
+                                                                                                  bin4data, bin5data, bin6data, bin7data, bin8data, bin9data, bin0data, bin1data,
+                                                                                                  bin2data, bin3data, bin4data, bin5data, bin6data, bin7data, bin8data, bin9data,
+                                                                                                  bin0data, bin1data, bin2data, bin3data, bin4data, bin5data, bin6data, bin7data
+                                                                                                },
+                                                                               // Pointers to 10 bin arrays, because PROGMEM arrays-of-arrays are weird:
+                                                                               * const binData2[] = { bin9data, bin9data, bin8data, bin8data, bin7data, bin7data, bin6data, bin6data,
+                                                                                                      bin5data, bin5data, bin4data, bin4data, bin4data, bin3data, bin3data, bin3data,
+                                                                                                      bin2data, bin2data, bin2data, bin1data, bin1data, bin1data, bin0data, bin0data,
+                                                                                                      bin0data, bin0data, bin1data, bin1data, bin1data, bin2data, bin2data, bin2data,
+                                                                                                      bin3data, bin3data, bin3data, bin4data, bin4data, bin4data, bin5data, bin5data,
+                                                                                                      bin6data, bin6data, bin7data, bin7data, bin8data, bin8data, bin9data, bin9data
+                                                                                                    },
+                                                                                   * const binData3[] = { bin0data, bin0data, bin1data, bin1data, bin2data, bin2data, bin3data, bin3data,
+                                                                                                          bin4data, bin4data, bin5data, bin5data, bin5data, bin6data, bin6data, bin6data,
+                                                                                                          bin7data, bin7data, bin7data, bin8data, bin8data, bin8data, bin9data, bin9data,
+                                                                                                          bin9data, bin9data, bin8data, bin8data, bin8data, bin7data, bin7data, bin7data,
+                                                                                                          bin6data, bin6data, bin6data, bin5data, bin5data, bin5data, bin4data, bin4data,
+                                                                                                          bin3data, bin3data, bin2data, bin2data, bin1data, bin1data, bin0data, bin0data
+                                                                                                        },
+                                                                                       * const binData4[] = { bin0data, bin0data, bin0data, bin0data, bin0data, bin1data, bin1data, bin1data,
+                                                                                                              bin1data, bin1data, bin2data, bin2data, bin2data, bin2data, bin2data, bin3data,
+                                                                                                              bin3data, bin3data, bin3data, bin3data, bin4data, bin4data, bin4data, bin4data,
+                                                                                                              bin4data, bin5data, bin5data, bin5data, bin5data, bin5data, bin6data, bin6data,
+                                                                                                              bin6data, bin6data, bin6data, bin7data, bin7data, bin7data, bin7data, bin7data,
+                                                                                                              bin8data, bin8data, bin8data, bin8data, bin9data, bin9data, bin9data, bin9data
+                                                                                                            },
+                                                                                           // R,G,B values for color wheel covering 10 NeoPixels:
+                                                                                           reds0[]   = { 0xAD, 0x9A, 0x84, 0x65, 0x00, 0x00, 0x00, 0x00, 0x65, 0x84, 0xAD, 0x9A, 0x84, 0x65, 0x00, 0x00, 0x00, 0x00, 0x65, 0x84, 0xAD, 0x9A, 0x84, 0x65, 0x00, 0x00, 0x00, 0x00, 0x65, 0x84, 0xAD, 0x9A, 0x84, 0x65, 0x00, 0x00, 0x00, 0x00, 0x65, 0x84, 0xAD, 0x9A, 0x84, 0x65, 0x00, 0x00, 0x00, 0x00, 0x65, 0x84 },
+                                                                                               greens0[] = { 0x00, 0x66, 0x87, 0x9E, 0xB1, 0x87, 0x66, 0x00, 0x00, 0x00, 0x00, 0x66, 0x87, 0x9E, 0xB1, 0x87, 0x66, 0x00, 0x00, 0x00, 0x00, 0x66, 0x87, 0x9E, 0xB1, 0x87, 0x66, 0x00, 0x00, 0x00, 0x00, 0x66, 0x87, 0x9E, 0xB1, 0x87, 0x66, 0x00, 0x00, 0x00, 0x00, 0x66, 0x87, 0x9E, 0xB1, 0x87, 0x66, 0x00, 0x00, 0x00 },
+                                                                                                   blues0[]  = { 0x00, 0x00, 0x00, 0x00, 0x00, 0xC3, 0xE4, 0xFF, 0xE4, 0xC3, 0x00, 0x00, 0x00, 0x00, 0x00, 0xC3, 0xE4, 0xFF, 0xE4, 0xC3, 0x00, 0x00, 0x00, 0x00, 0x00, 0xC3, 0xE4, 0xFF, 0xE4, 0xC3, 0x00, 0x00, 0x00, 0x00, 0x00, 0xC3, 0xE4, 0xFF, 0xE4, 0xC3, 0x00, 0x00, 0x00, 0x00, 0x00, 0xC3, 0xE4, 0xFF, 0xE4, 0xC3 },
+                                                                                                       // R,G,B values for color wheel covering 10 NeoPixels:
+                                                                                                       reds1[]   = { 0xAD, 0x9A, 0x84, 0x65, 0x00, 0x00, 0x00, 0x00, 0x65, 0x84, 0xAD, 0x9A},
+                                                                                                           greens1[] = { 0x00, 0x66, 0x87, 0x9E, 0xB1, 0x87, 0x66, 0x00, 0x00, 0x00, 0x00, 0x66},
+                                                                                                               blues1[]  = { 0x00, 0x00, 0x00, 0x00, 0x00, 0xC3, 0xE4, 0xFF, 0xE4, 0xC3, 0x00, 0x00, },
 gamma8[] = { // Gamma correction improves the appearance of midrange colors
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
