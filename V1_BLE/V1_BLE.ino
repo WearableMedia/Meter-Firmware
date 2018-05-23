@@ -109,6 +109,8 @@ bool prevLeftButtonPressed = false;
 int rightButtonCounter = 0;
 bool prevRightButtonPressed = false;
 
+bool LEDOn = true;
+bool LEDEnable = false;
 #include "Calibration.h"
 
 void setup() {
@@ -175,39 +177,58 @@ void loop() {
   //char method
   bool slideSwitch = CircuitPlayground.slideSwitch();
   if (slideSwitch) {
-    //check the button
-    bool leftButtonPressed = CircuitPlayground.leftButton();
-    if (!leftButtonPressed) {
-      if (prevLeftButtonPressed) {
-        leftButtonCounter++;
-      }
+    LEDEnable = true;
+  } else {
+    LEDEnable = false;
+  }
+
+  //check the button
+  bool leftButtonPressed = CircuitPlayground.leftButton();
+  if (!leftButtonPressed) {
+    if (prevLeftButtonPressed) {
+      leftButtonCounter++;
     }
+  }
 
-
-    bool rightButtonPressed = CircuitPlayground.rightButton();
-    if (!rightButtonPressed) {
-      if (prevRightButtonPressed) {
-        rightButtonCounter++;
-      }
-    }
-
-
-    if ( ble.available() )
-    {
-      int c = ble.read();
-      Serial.print((char)c);
+  bool rightButtonPressed = CircuitPlayground.rightButton();
+  if (!rightButtonPressed) {
+    if (prevRightButtonPressed) {
       rightButtonCounter++;
     }
+  }
 
-    if (leftButtonCounter >= 5) {
+  if ( ble.available() )
+  {
+    int c = ble.read();
+    Serial.print((char)c);
+    if ((char)c == 'a') {
       leftButtonCounter = 0;
-    }
-    prevLeftButtonPressed = leftButtonPressed;
-
-    if (rightButtonCounter >= 6) {
       rightButtonCounter = 0;
+    } else if ((char)c == 'b') {
+      leftButtonCounter = 2;
+      rightButtonCounter = 2;
+    } else if ((char)c == 'c') {
+      leftButtonCounter = 4;
+      rightButtonCounter = 4;
+    } else if ((char)c == 'o') {
+      LEDOn = true;
+    } else if ((char)c == 'f') {
+      LEDOn = false;
     }
-    prevRightButtonPressed = rightButtonPressed;
+  }
+
+  if (leftButtonCounter >= 5) {
+    leftButtonCounter = 0;
+  }
+  prevLeftButtonPressed = leftButtonPressed;
+
+  if (rightButtonCounter >= 6) {
+    rightButtonCounter = 0;
+  }
+  prevRightButtonPressed = rightButtonPressed;
+
+
+  if (LEDEnable && LEDOn) {
     uint16_t spectrum[32]; // FFT spectrum output buffer
 
     CircuitPlayground.mic.fft(spectrum);
